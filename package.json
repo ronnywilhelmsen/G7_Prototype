@@ -1,0 +1,22 @@
+{
+  "name": "g7_prototype",
+  "version": "1.0.0",
+  "description": "SE&T2021:G7_Prototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronnywilhelmsen/G7_Prototype.git"
+  },
+  "keywords": [
+    "g7"
+  ],
+  "author": "Ronny Wilhelmsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronnywilhelmsen/G7_Prototype/issues"
+  },
+  "homepage": "https://github.com/ronnywilhelmsen/G7_Prototype#readme"
+}
