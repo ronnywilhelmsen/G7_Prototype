@@ -1,0 +1,6 @@
+Create main page with a list of all categories
+Each category will be a button which leads to the corresponding page
+-- This page will have a list of all available items
+-- Each item will be a button leading to an item specific page
+
+https://getbootstrap.com/docs/4.0/components/card/
