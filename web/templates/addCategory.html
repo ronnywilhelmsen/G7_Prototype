@@ -1,0 +1,24 @@
+{% extends "main.html" %} {% block title %} Add category {% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <h3 align="center">Add new category</h3>
+        <div class="form-group">
+
+            <label for="name">Category name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="ex. Cars">
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="category">Category description</label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="ex. A market place to buy and sell cars">
+
+        </div>
+    <br />
+    <button type="submit" class="btn btn-primary bg-dark">
+        Submit
+    </button>
+    </form>
+{% endblock %}
