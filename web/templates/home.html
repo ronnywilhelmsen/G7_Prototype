@@ -3,51 +3,24 @@
 {% block content %}
     <h1>Insert awesome name</h1>
     <p>Insert an even more awesome slogan</p>
-    <button class="btn btn-primary bg-light">
+    <button class="btn btn-primary bg-dark">
         <a class="nav-item nav-link" id="addCategory" href="/addCategory">Add new category (ADMIN)</a>
     </button>
       <div class="container">
-  <!--<h2>Categories</h2>!-->
+  <h1>Categories</h1>
   </div>
 
     <div class="row">
         {% for category in categories %}
-      <div class="col-sm-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ category.name }}</h5>
-            <p class="card-text">{{ category.description }}</p>
-            <a href="/category-overview" class="btn btn-secondary">Details</a>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ category.name }}</h5>
+                <p class="card-text">{{ category.description }}</p>
+                <a href="/category-overview/{{ category.id }}" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-            <style>
-
-           .row {
-               margin-left: 150px;
-               margin-right:150px;
-           }
-
-          .card{
-              margin: 25px;
-
-          }
-          .btn-primary{
-            margin-left: 185px;
-            color: white;
-          }
-
-          .btn-secondary{
-              background-color: #2596be;
-          }
-
-          .card-title{
-              font-weight: 600;
-          }
-
-
-            </style>
-
         {% endfor %}
   </div>
 
