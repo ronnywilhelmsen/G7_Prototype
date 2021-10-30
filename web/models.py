@@ -16,8 +16,16 @@ class Item(database.Model):
 
 class Category(database.Model):
     id = database.Column(database.Integer, primary_key=True)
-    name = database.Column(database.String(99), unique=True)
+    name = database.Column(database.String(99))
     description = database.Column(database.String(9999))
     items = database.relationship('Item')
+    store_id = database.Column(database.Integer, database.ForeignKey('store.id'))
+
+class Store(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    name = database.Column(database.String(99), unique=True)
+    description = database.Column(database.String(9999))
+    picture_url = database.Column(database.String(9999))
+    categories = database.relationship('Category')
 
 # Could add user class to make a log in system
