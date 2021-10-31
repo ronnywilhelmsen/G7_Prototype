@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from sqlalchemy import func
 
 from . import database
@@ -27,5 +28,9 @@ class Store(database.Model):
     description = database.Column(database.String(9999))
     picture_url = database.Column(database.String(9999))
     categories = database.relationship('Category')
+
+class User(database.Model, UserMixin):
+    id = database.Column(database.Integer, primary_key=True)
+    name = database.Column(database.String(99), unique=True)
 
 # Could add user class to make a log in system
