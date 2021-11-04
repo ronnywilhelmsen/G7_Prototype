@@ -11,14 +11,12 @@ def sign_up():
     if request.method == 'POST':
         name = request.form.get('name')
 
-        user = User.query.filter_by(name=name).first()
-
-        flash("Admin added...", category="success")
+        flash(name + " added...", category="success")
         new_User = User(name=name)
         database.session.add(new_User)
         database.session.commit()
 
-        login_user(new_User, remember=True)
+        login_user(new_User)
 
         return redirect(url_for('views.homepage'))
 
@@ -41,17 +39,20 @@ def store_overview(storeId):
     store = Store.query.get(storeId)
     return render_template("store-overview.html", categories=store.categories, storeId=store.id)
 
+def store():
+    name = request.form.get('name')
+    description = request.form.get('description')
+    picture_url = request.form.get('picture_url')
+
+    flash(name + " has been added...", category="success")
+    new_Store = Store(name=name, description=description, picture_url=picture_url)
+    database.session.add(new_Store)
+    database.session.commit()
+
 @views.route("/addStore", methods=['GET', 'POST'])
 def addStore():
     if request.method == 'POST':
-        name = request.form.get('name')
-        description = request.form.get('description')
-        picture_url = request.form.get('picture_url')
-
-        flash("Store has been added...", category="success")
-        new_Store = Store(name=name, description=description, picture_url=picture_url)
-        database.session.add(new_Store)
-        database.session.commit()
+        store()
         return redirect(url_for('views.homepage'))
 
     return render_template("addStore.html")
@@ -62,38 +63,47 @@ def category_overview(storeId, catId):
     category = Category.query.get(catId)
     return render_template("category-overview.html", items=category.items, catId=category.id, storeId=store.id)
 
+def category(storeId):
+    name = request.form.get('name')
+    description = request.form.get('description')
+
+    flash(name + " has been added...", category="success")
+    new_Category = Category(name=name, description=description, store_id=storeId)
+    database.session.add(new_Category)
+    database.session.commit()
+
 @views.route("/store-overview/<storeId>/addCategory", methods=['GET', 'POST'])
 def addCategory(storeId):
     store = Store.query.get(storeId)
+    storeId = store.id
     if request.method == 'POST':
-        name = request.form.get('name')
-        description = request.form.get('description')
-
-        flash("Category has been added...", category="success")
-        new_Category = Category(name=name, description=description, store_id = storeId)
-        database.session.add(new_Category)
-        database.session.commit()
+        category(storeId)
         return redirect(request.referrer)
 
     return render_template("addCategory.html", storeId=store.id)
+
+def item(catId):
+    producer = request.form.get('producer')
+    model = request.form.get('model')
+    description = request.form.get('description')
+    price = request.form.get('price')
+    end_time = request.form.get('end_time')
+    picture_url = request.form.get('picture_url')
+
+    flash(model + " has been added to auction...", category="success")
+    new_item = Item(producer=producer, model=model, description=description, price=price, end_time=end_time,
+                    picture_url=picture_url, category_id=catId)
+    database.session.add(new_item)
+    database.session.commit()
 
 @views.route("/<storeId>/category-overview/<catId>/addItem", methods=['GET', 'POST'])
 def addItem(storeId, catId):
     store = Store.query.get(storeId)
     category = Category.query.get(catId)
+    catId = category.id
 
     if request.method == 'POST':
-        producer = request.form.get('producer')
-        model = request.form.get('model')
-        description = request.form.get('description')
-        price = request.form.get('price')
-        end_time = request.form.get('end_time')
-        picture_url = request.form.get('picture_url')
-
-        flash("Item has been added to auction...", category="success")
-        new_item = Item(producer=producer, model=model, description=description, price=price, end_time=end_time, picture_url=picture_url, category_id = catId)
-        database.session.add(new_item)
-        database.session.commit()
+        item(catId)
         return redirect(request.referrer)
 
     return render_template("addItem.html", catId=category.id, storeId=store.id)
@@ -101,8 +111,10 @@ def addItem(storeId, catId):
 @views.route("/<storeId>/category-overview/<catId>/item/<itemId>", methods=['GET', 'POST'])
 def item_overview(storeId, catId, itemId):
     store = Store.query.get(storeId)
-    item = Item.query.get(itemId)
     category = Category.query.get(catId)
+    item = Item.query.get(itemId)
+
+
 
     if request.method == 'POST':
         new_price = int(request.form.get('price'))
