@@ -41,13 +41,13 @@ def store_overview(storeId):
 
 def store():
     name = request.form.get('name')
+    description = request.form.get('description')
+    picture_url = request.form.get('picture_url')
     if len(name) < 3:
         flash("Name to short", category="error")
-    description = request.form.get('description')
-    if len(description) < 3:
+    elif len(description) < 3:
         flash("Description to short", category="error")
-    picture_url = request.form.get('picture_url')
-    if len(picture_url) < 0:
+    elif len(picture_url) < 0:
         flash("URL to short", category="error")
     else:
         flash(name + " has been added...", category="success")
@@ -71,10 +71,10 @@ def category_overview(storeId, catId):
 
 def category(storeId):
     name = request.form.get('name')
+    description = request.form.get('description')
     if len(name) < 3:
         flash("Name to short", category="error")
-    description = request.form.get('description')
-    if len(description) < 3:
+    elif len(description) < 3:
         flash("Description to short", category="error")
     else:
         flash(name + " has been added...", category="success")
