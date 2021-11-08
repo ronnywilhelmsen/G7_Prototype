@@ -1,7 +1,6 @@
 from flask import request, flash, redirect, render_template
 from flask_login import login_user
 
-from web.models import *
 from web.models import Category, Item, Store, User
 
 from web import database
