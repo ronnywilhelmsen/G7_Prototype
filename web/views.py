@@ -47,7 +47,7 @@ def item_overview(storeId, catId, itemId):
     item = Item.query.get(itemId)
 
     if request.method == 'POST':
-        webrepository.logick(itemId)
+        webrepository.new_bid_higher_than_last_bid(itemId)
 
     return render_template("item-overview.html", item=item, catId=category.id, storeId=store.id)
 

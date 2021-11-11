@@ -60,7 +60,7 @@ def item(catId):
         database.session.add(new_item)
         database.session.commit()
 
-def logick(itemId):
+def new_bid_higher_than_last_bid(itemId):
     item = Item.query.get(itemId)
 
     new_price = int(request.form.get('price'))
