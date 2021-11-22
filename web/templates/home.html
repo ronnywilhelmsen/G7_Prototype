@@ -1,27 +1,38 @@
 {% extends "main.html" %} {% block title %} Homepage {% endblock %}
 
 {% block content %}
-    <h1>Insert awesome name</h1>
-    <p>Insert an even more awesome slogan</p>
+    <h1>Welcome to G7 Auctions</h1>
+    <p>The place to find all kinds of stuff</p>
+
+    {% if user.name == "ADMIN" %}
     <button class="btn btn-primary bg-dark">
-        <a class="nav-item nav-link" id="addStore" href="/addStore">Add new store (ADMIN)</a>
+        <a class="nav-item nav-link" id="addStore" href="/addStore">Add new store</a>
     </button>
-      <div class="container">
-  <h1>Stores</h1>
+    {% endif %}
+
+    </br>
+    </br>
+    </br>
+    </br>
+
+  <div class="container">
+    <h1>Stores</h1>
   </div>
 
     <div class="row">
         {% for store in stores %}
           <div class="col-sm-6">
+            </br>
+            </br>
             <div class="card">
+            <img class="card-img-top" src="{{ store.picture_url }}" alt="Store image">
               <div class="card-body">
                 <h5 class="card-title">{{ store.name }}</h5>
                 <p class="card-text">{{ store.description }}</p>
-                <a href="/store-overview/{{ store.id }}" class="btn btn-primary">Go somewhere</a>
+                <a href="/store-overview/{{ store.id }}" class="btn btn-primary">Visit {{ store.name }}</a>
               </div>
             </div>
           </div>
         {% endfor %}
   </div>
-
 {% endblock %}

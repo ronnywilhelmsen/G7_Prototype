@@ -1,11 +1,16 @@
 {% extends "main.html" %} {% block title %} Homepage {% endblock %}
 
 {% block content %}
-    <h1>Insert awesome name</h1>
-    <p>Insert an even more awesome slogan</p>
+    <h1>{{ store.name }}</h1>
+    <p>{{ store.description }}</p>
     <button class="btn btn-primary bg-dark">
-        <a class="nav-item nav-link" id="addCategory" href="/store-overview/{{ storeId }}/addCategory">Add new category (STORE)</a>
+        <a class="nav-item nav-link" id="BackToCatOverview" href="/">Back</a>
     </button>
+    {% if user.name == store.name or user.name == "ADMIN" %}
+    <button class="btn btn-primary bg-dark">
+        <a class="nav-item nav-link" id="addCategory" href="/store-overview/{{ store.id }}/addCategory">Add new category</a>
+    </button>
+        {% endif %}
       <div class="container">
   <h1>Categories</h1>
   </div>
@@ -17,11 +22,11 @@
               <div class="card-body">
                 <h5 class="card-title">{{ category.name }}</h5>
                 <p class="card-text">{{ category.description }}</p>
-                <a href="/{{ storeId }}/category-overview/{{ category.id }}" class="btn btn-primary">Go somewhere</a>
+                <a href="/{{ store.id }}/category-overview/{{ category.id }}" class="btn btn-primary">Visit {{ category.name }}</a>
               </div>
             </div>
+              </br>
           </div>
         {% endfor %}
   </div>
-
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
     <button class="btn btn-primary bg-dark">
-        <a class="nav-item nav-link" id="BackToCatOverview" href="/{{ storeId }}/category-overview/{{ catId }}">Back</a>
+        <a class="nav-item nav-link" id="BackToCatOverview" href="/{{ store.id }}/category-overview/{{ category.id }}">Back</a>
     </button>
     <form method="POST">
         <h3 align="center">Add new item</h3>
@@ -36,8 +36,15 @@
 
         <div class="form-group">
 
-            <label for="price">End time</label>
-            <input type="text" class="form-control" id="end_time" name="end_time" placeholder="">
+            <label for="description">Auction Duration</label>
+            <input type="text" class="form-control" id="duration" name="duration" placeholder="ex. 3hrs">
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="type">Sale type</label>
+            <input type="text" class="form-control" id="type" name="type" placeholder="Either: A or S">
 
         </div>
 

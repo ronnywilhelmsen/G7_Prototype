@@ -1,32 +1,51 @@
 {% extends "main.html" %} {% block title %} Add category {% endblock %}
 {% block content %}
+    <h1><a href="/store-overview/{{ store.id }}">{{ store.name }}</a> / {{ category.name }}</h1>
+    {% if user.name == store.name or user.name == "ADMIN" %}
     <button class="btn btn-primary bg-dark">
-        <a class="nav-item nav-link" id="BackToCatOverview" href="/store-overview/{{ storeId }}">Back</a>
+        <a class="nav-item nav-link" id="addItem" href="/{{ store.id }}/category-overview/{{ category.id }}/addItem">List new Item</a>
     </button>
-    <button class="btn btn-primary bg-dark">
-        <a class="nav-item nav-link" id="addItem" href="/{{ storeId }}/category-overview/{{ catId }}/addItem">List new Item for Auction</a>
-    </button>
+    {% endif %}
+    </br>
+    </br>
+    </br>
+    </br>
     <div class="card-deck">
         {% for item in items %}
+            {% if item.type == "A" %}
           <div class="card">
-            <img class="card-img-top" src="{{ item.picture_url }}" alt="Card image cap">
+          <a href="/{{ store.id }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">
+            <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
             <div class="card-body">
               <h5 class="card-title">Producer: {{ item.producer }}</h5>
               <p class="card-text">Model: {{ item.model }}</p>
-              <p class="card-text">Description: {{ item.description }}</p>
               <p class="card-text">Price: {{ item.price }}kr</p>
             </div>
-              <button type="button" class="btn btn-primary bg-dark" onClick="showDetails{{ item.id }}">
-                <a class="nav-item nav-link" id="showItem" href="/{{ storeId }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">Show Item</a>
-            </button>
               <div class="card-footer">
-                  <small class="text-muted">Time left: {{ item.duration }}</small>
+                  <small class="text-muted">Time left: {{ item.duration }}hrs</small>
             </div>
             <div class="card-footer">
               <small class="text-muted">Created: {{ item.start_time }}</small>
             </div>
+          </a>
           </div>
             </br>
+            {% elif item.type == "S" %}
+                <div class="card">
+               <a href="/{{ store.id }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">
+            <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
+            <div class="card-body">
+              <h5 class="card-title">Producer: {{ item.producer }}</h5>
+              <p class="card-text">Model: {{ item.model }}</p>
+              <p class="card-text">Price: {{ item.price }}kr</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Created: {{ item.start_time }}</small>
+            </div>
+               </a>
+          </div>
+            </br>
+            {% endif %}
         {% endfor %}
     </div>
 {%  endblock %}

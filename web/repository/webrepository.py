@@ -39,26 +39,36 @@ def item(catId):
     model = request.form.get('model')
     description = request.form.get('description')
     price = request.form.get('price')
-    end_time = request.form.get('end_time')
+    duration = request.form.get('duration')
+    type = request.form.get('type')
     picture_url = request.form.get('picture_url')
-    if len(producer) < 3:
+    if len(producer) < 1:
         flash("Producer to short", category="error")
-    elif len(model) < 3:
+    elif len(model) < 1:
         flash("Model to short", category="error")
-    elif len(description) < 3:
+    elif len(description) < 1:
         flash("Description to short", category="error")
     elif len(price) < 0:
         flash("Price to low", category="error")
-    elif len(end_time) < 0:
-        flash("End time to short", category="error")
+    elif len(duration) < 0:
+        flash("Duration to low", category="error")
+    elif len(type) < 0:
+        flash("Type to short", category="error")
     elif len(picture_url) < 0:
         flash("URL to short", category="error")
     else:
-        flash(model + " has been added to auction...", category="success")
-        new_item = Item(producer=producer, model=model, description=description, price=price, end_time=end_time,
-                        picture_url=picture_url, category_id=catId)
-        database.session.add(new_item)
-        database.session.commit()
+        if type == "A":
+            flash(model + " has been added to auction...", category="success")
+            new_item = Item(producer=producer, model=model, description=description, price=price,
+                            duration=duration, type=type, picture_url=picture_url, category_id=catId)
+            database.session.add(new_item)
+            database.session.commit()
+        elif type == "S":
+            flash(model + " has been added to sale...", category="success")
+            new_item = Item(producer=producer, model=model, description=description, price=price,
+                            duration=duration, type=type, picture_url=picture_url, category_id=catId)
+            database.session.add(new_item)
+            database.session.commit()
 
 def new_bid_higher_than_last_bid(itemId):
     item = Item.query.get(itemId)
@@ -80,5 +90,5 @@ def sign_up():
     database.session.add(new_User)
     database.session.commit()
 
-    login_user(new_User)
+    login_user(new_User, remember=True)
 
