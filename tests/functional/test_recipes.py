@@ -1,4 +1,8 @@
 from web import start
+from web.models import User, Store, Item, Category
+from web.repository import webrepository
+from web.repository import buisnesslogic
+from web.repository import authrepo
 
 def test_homepage(test_client):
     app = start()
@@ -30,6 +34,10 @@ def test_add_new_store(test_client):
     app = start()
 
     with app.test_client() as test_client:
+
+        user = User('test')
+
+
         response = test_client.get('/addStore')
         assert response.status_code == 200
 
@@ -46,3 +54,4 @@ def test_add_new_item(test_client):
     with app.test_client() as test_client:
         response = test_client.get('/1/category-overview/1/addItem')
         assert response.status_code == 200
+

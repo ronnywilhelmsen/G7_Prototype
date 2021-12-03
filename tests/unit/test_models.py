@@ -17,7 +17,7 @@ def test_new_category_with_fixture(new_category):
     assert category.store_id == "1"
 
 def test_new_item_with_fixture(new_item):
-    item = Item("Producer", "Model", "Description", "123", "3", "A", "", "1") # Producer, Model, Description, Price, Duration, Type, PicURL, CatId
+    item = Item("Producer", "Model", "Description", "123", "3", "A", "", "1")
     assert item.producer == "Producer"
     assert item.model == "Model"
     assert item.description == "Description"

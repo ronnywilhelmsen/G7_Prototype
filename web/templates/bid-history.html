@@ -1,0 +1,23 @@
+{% extends "main.html" %} {% block title %} Homepage {% endblock %}
+
+{% block content %}
+    <h1>{{ user.name }}</h1>
+    <p>Cart Overview</p>
+    <button class="btn btn-primary bg-dark">
+        <a class="nav-item nav-link" id="BackToCatOverview" href="/">Back</a>
+    </button>
+    {% for bid in bid %}
+        {% for item in items %}
+            {% if bid.itemId == item.id %}
+          <div class="card">
+            <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
+            <div class="card-body">
+              <h5 class="card-title">Producer: {{ item.producer }}</h5>
+              <p class="card-text">Model: {{ item.model }}</p>
+              <p class="card-text">Price: {{ item.price }}kr</p>
+            </div>
+          </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+{% endblock %}

@@ -71,39 +71,3 @@ def item(catId):
             flash(model + " has been added to display...", category="success")
             database.session.add(new_item)
             database.session.commit()
-
-# def bid(itemId, userId):
-#     item = Item.query.get(itemId)
-#
-#     new_price = int(request.form.get('price'))
-#     if new_price > item.price:
-#         new_bid = Bid(price = new_price)
-#         database.session.add(new_bid)
-#         database.session.commit()
-#         flash("Bid accepted...", category="success")
-#         return redirect(request.referrer)
-#     else:
-#         flash("New Bid is lower than current bid...", category="error")
-
-def new_bid_higher_than_last_bid(itemId):
-    item = Item.query.get(itemId)
-
-    new_price = int(request.form.get('price'))
-    if new_price > item.price:
-        item.price = new_price
-        database.session.commit()
-        flash("Bid accepted...", category="success")
-        return redirect(request.referrer)
-    else:
-        flash("New Bid is lower than current bid...", category="error")
-
-def sign_up():
-    name = request.form.get('name')
-
-    flash(name + " added...", category="success")
-    new_User = User(name=name)
-    database.session.add(new_User)
-    database.session.commit()
-
-    login_user(new_User, remember=True)
-

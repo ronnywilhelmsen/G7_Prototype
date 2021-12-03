@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from sqlalchemy import func
+from flask_login import current_user
 
 from . import database
 
@@ -52,32 +53,31 @@ class Store(database.Model):
 class User(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     name = database.Column(database.String(99), unique=True)
-    # cart = database.relationship('Item')
+    cart = database.relationship('Sale')
+    bid = database.relationship('Bid')
 
     def __init__(self, name):
         self.name = name
 
-
 class Bid(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     userId = database.Column(database.Integer, database.ForeignKey('user.id'))
-    itemId = database.Column(database.Integer, database.ForeignKey('item.id'))
+    itemId = database.Column(database.Integer)
     price = database.Column(database.Integer)
 
-
-    def __init__(self, price):
+    def __init__(self, userId, itemId, price):
+        self.userId = userId
+        self.itemId = itemId
         self.price = price
 
 class Sale(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     userId = database.Column(database.Integer, database.ForeignKey('user.id'))
-    itemId = database.Column(database.Integer, database.ForeignKey('item.id'))
-    price = database.Column(database.Integer)
+    itemId = database.Column(database.Integer)
 
-
-    def __init__(self, price):
-        self.price = price
-
+    def __init__(self, userId, itemId):
+        self.userId = userId
+        self.itemId = itemId
 
 # Kan legge til en klasse "BID" som har en id, ForeignKey til User og Item, samt en pris.
 # Gjør det mulig å holde styr på hvem som la inn bud

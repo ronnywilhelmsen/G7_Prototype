@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, current_user, logout_user
 
-from web.models import Category, Item, Store, User
+from web.models import Category, Item, Store, User, Bid, Sale
 from web.repository import webrepository
+from web.repository import buisnesslogic
+from web.repository import authrepo
 
 views = Blueprint("views", __name__)
 
@@ -10,7 +12,7 @@ views = Blueprint("views", __name__)
 @views.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        webrepository.sign_up()
+        authrepo.sign_up()
 
         return redirect(url_for('views.homepage'))
 
@@ -19,15 +21,7 @@ def sign_up():
 @views.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        name = request.form.get('name')
-
-        user = User.query.filter_by(name=name).first()
-        if user:
-            login_user(user, remember=User)
-            flash("Successfully logged in as " + user.name, category="success")
-            return redirect("/")
-        else:
-            flash("Username: " + user.name + " does not exist", category="error")
+        authrepo.login()
 
     return render_template("login.html")
 
@@ -45,14 +39,34 @@ def homepage():
 @views.route("/store-overview/<storeId>")
 def store_overview(storeId):
     store = Store.query.get(storeId)
-    return render_template("store-overview.html", categories=store.categories, store=store, user=current_user)
+    categories = store.categories
+    return render_template("store-overview.html", categories=categories, store=store, user=current_user)
+
+@views.route("/cart-overview")
+def cart_overview():
+
+    user = current_user
+    cart = user.cart
+    items = Item.query.all()
+
+    return render_template("cart-overview.html", user = user, cart=cart, items=items)
+
+@views.route("/bid-history")
+def bid_history():
+
+    user = current_user
+    bid = user.bid
+    items = Item.query.all()
+
+    return render_template("bid-history.html", user=user, bid=bid, items=items)
 
 @views.route("/<storeId>/category-overview/<catId>")
 def category_overview(storeId, catId):
     store = Store.query.get(storeId)
     category = Category.query.get(catId)
+    items = category.items
 
-    return render_template("category-overview.html", items=category.items, category=category, store=store, user=current_user)
+    return render_template("category-overview.html", items=items, category=category, store=store, user=current_user)
 
 @views.route("/<storeId>/category-overview/<catId>/item/<itemId>", methods=['GET', 'POST'])
 def item_overview(storeId, catId, itemId):
@@ -62,8 +76,9 @@ def item_overview(storeId, catId, itemId):
 
     if request.method == 'POST':
         if item.type == "A":
-            webrepository.new_bid_higher_than_last_bid(itemId)
+            buisnesslogic.bid(itemId)
         else:
+            buisnesslogic.sale(itemId)
             flash("You bought " + item.model, category="success")
 
     return render_template("item-overview.html", item=item, category=category, store=store, user=current_user)
@@ -85,7 +100,7 @@ def addCategory(storeId):
         webrepository.category(storeId)
         return redirect(request.referrer)
 
-    return render_template("addCategory.html", storeId=store.id, user=current_user)
+    return render_template("addCategory.html", storeId=storeId, user=current_user)
 
 @views.route("/<storeId>/category-overview/<catId>/addItem", methods=['GET', 'POST'])
 def addItem(storeId, catId):
