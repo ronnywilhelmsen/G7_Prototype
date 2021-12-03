@@ -1,7 +1,7 @@
-from flask import request, flash, redirect, render_template
-from flask_login import login_user
+from flask import request, flash, redirect
+from flask_login import login_user, current_user
 
-from web.models import Category, Item, Store, User
+from web.models import Category, Item, Store, User, Bid, Sale
 
 from web import database
 
@@ -53,22 +53,37 @@ def item(catId):
     elif len(duration) < 0:
         flash("Duration to low", category="error")
     elif len(type) < 0:
-        flash("Type to short", category="error")
+        flash("Not a sale type, must either be A-auction, S-sale or D-display", category="error")
     elif len(picture_url) < 0:
         flash("URL to short", category="error")
     else:
+        new_item = Item(producer=producer, model=model, description=description, price=price,
+                        duration=duration, type=type, picture_url=picture_url, category_id=catId)
         if type == "A":
             flash(model + " has been added to auction...", category="success")
-            new_item = Item(producer=producer, model=model, description=description, price=price,
-                            duration=duration, type=type, picture_url=picture_url, category_id=catId)
             database.session.add(new_item)
             database.session.commit()
         elif type == "S":
             flash(model + " has been added to sale...", category="success")
-            new_item = Item(producer=producer, model=model, description=description, price=price,
-                            duration=duration, type=type, picture_url=picture_url, category_id=catId)
             database.session.add(new_item)
             database.session.commit()
+        elif type == "D":
+            flash(model + " has been added to display...", category="success")
+            database.session.add(new_item)
+            database.session.commit()
+
+# def bid(itemId, userId):
+#     item = Item.query.get(itemId)
+#
+#     new_price = int(request.form.get('price'))
+#     if new_price > item.price:
+#         new_bid = Bid(price = new_price)
+#         database.session.add(new_bid)
+#         database.session.commit()
+#         flash("Bid accepted...", category="success")
+#         return redirect(request.referrer)
+#     else:
+#         flash("New Bid is lower than current bid...", category="error")
 
 def new_bid_higher_than_last_bid(itemId):
     item = Item.query.get(itemId)

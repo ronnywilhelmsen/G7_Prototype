@@ -39,9 +39,7 @@ def logout():
 
 @views.route("/")
 def homepage():
-    items = Item.query.all()
-
-    return render_template("home.html", stores=Store.query.all(), items=items, user=current_user)
+    return render_template("home.html", stores=Store.query.all(), user=current_user)
 
  # ------- OVERVIEWS ------- #
 @views.route("/store-overview/<storeId>")
@@ -66,7 +64,7 @@ def item_overview(storeId, catId, itemId):
         if item.type == "A":
             webrepository.new_bid_higher_than_last_bid(itemId)
         else:
-            flash("You bought the item", category="success")
+            flash("You bought " + item.model, category="success")
 
     return render_template("item-overview.html", item=item, category=category, store=store, user=current_user)
 

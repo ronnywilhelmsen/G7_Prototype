@@ -31,10 +31,6 @@ def start():
 
     return app
 
-    from .models import Category, Item
-
-    return app
-
 def start_database(app):
     if not path.exists("web/" + Database_Name):
         database.create_all(app=app)

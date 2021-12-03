@@ -14,6 +14,7 @@
         {% for item in items %}
             {% if item.type == "A" %}
           <div class="card">
+          <h3>For Auction</h3>
           <a href="/{{ store.id }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">
             <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
             <div class="card-body">
@@ -32,6 +33,7 @@
             </br>
             {% elif item.type == "S" %}
                 <div class="card">
+                <h3>For Sale</h3>
                <a href="/{{ store.id }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">
             <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
             <div class="card-body">
@@ -41,6 +43,19 @@
             </div>
             <div class="card-footer">
               <small class="text-muted">Created: {{ item.start_time }}</small>
+            </div>
+               </a>
+          </div>
+            </br>
+                {% elif item.type == "D" %}
+                <div class="card">
+                <h3>For Display</h3>
+               <a href="/{{ store.id }}/category-overview/{{ item.category_id }}/item/{{ item.id }}">
+            <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
+            <div class="card-body">
+              <h5 class="card-title">Producer: {{ item.producer }}</h5>
+              <p class="card-text">Model: {{ item.model }}</p>
+              <p class="card-text">Price: {{ item.price }}kr</p>
             </div>
                </a>
           </div>

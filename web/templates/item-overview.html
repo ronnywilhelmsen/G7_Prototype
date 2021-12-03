@@ -27,7 +27,14 @@
                 </button>
                     {% endif %}
             </form>
-        {% else %}
+
+            {% elif item.type == "D" %}
+                <h3>This Item is for Display</h3>
+          <h5 class="card-title">Producer: {{ item.producer }}</h5>
+          <p class="card-text">Model: {{ item.model }}</p>
+          <p class="card-text">Description: {{ item.description }}</p>
+
+        {% elif item.type == "S" %}
         <button type="button" class="close" onclick="deleteItem{{ item.id }}"></button> <!-- Legge til JS for delete -->
             <h3>This Item is for Sale</h3>
           <h5 class="card-title">Producer: {{ item.producer }}</h5>

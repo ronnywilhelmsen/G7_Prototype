@@ -2,26 +2,26 @@ import pytest
 
 from web import database, start
 from web.models import User, Item, Category, Store
-
+from flask_login import login_user, current_user, logout_user
 
 @pytest.fixture(scope="module")
 def new_user():
-    user = User("HEI")
+    user = User("ADMIN")
     return user
 
 @pytest.fixture(scope="module")
 def new_item():
-    item = Item("Test", "Test", "Test", "123")
+    item = Item("Test", "Test", "Test", "123", "1", "A", "", "1")
     return item
 
 @pytest.fixture(scope="module")
 def new_category():
-    category = Category("Test", "Test")
+    category = Category("Test", "Test", "1")
     return category
 
 @pytest.fixture(scope="module")
 def new_store():
-    store = Store("Test", "Test")
+    store = Store("Test", "Test", "")
     return store
 
 @pytest.fixture(scope="module")
@@ -34,7 +34,6 @@ def test_client():
 
 @pytest.fixture(scope="module")
 def init_database(test_client):
-    database.create_all()
 
     user1 = User(name="Test1")
     user2 = User(name="Test2")
@@ -46,4 +45,5 @@ def init_database(test_client):
 
     yield
 
-    database.drop_all()
+    database.delete(user1)
+    database.delete(user2)
