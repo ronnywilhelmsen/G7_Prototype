@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from sqlalchemy import func
-from flask_login import current_user
 
 from . import database
 
@@ -78,7 +77,3 @@ class Sale(database.Model):
     def __init__(self, userId, itemId):
         self.userId = userId
         self.itemId = itemId
-
-# Kan legge til en klasse "BID" som har en id, ForeignKey til User og Item, samt en pris.
-# Gjør det mulig å holde styr på hvem som la inn bud
-# Må først ha login på plass

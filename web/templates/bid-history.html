@@ -2,13 +2,14 @@
 
 {% block content %}
     <h1>{{ user.name }}</h1>
-    <p>Cart Overview</p>
+    <p>Bid History</p>
     <button class="btn btn-primary bg-dark">
         <a class="nav-item nav-link" id="BackToCatOverview" href="/">Back</a>
     </button>
-    {% for bid in bid %}
+    <h2>Coming soon...</h2>
+    {% for b in bid %}
         {% for item in items %}
-            {% if bid.itemId == item.id %}
+            {% if b.itemId == item.id %}
           <div class="card">
             <img class="card-img-top" src="{{ item.picture_url }}" alt="Item image">
             <div class="card-body">

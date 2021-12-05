@@ -18,7 +18,6 @@ def bid(itemId):
         item.price = new_bid.price
         database.session.add(new_bid)
         database.session.commit()
-        flash("Bid accepted...", category="success")
         return redirect(request.referrer)
     else:
         flash("New Bid is lower than current bid...", category="error")
@@ -33,5 +32,5 @@ def sale(itemId):
     new_sale = Sale(userId = userid, itemId = itemid)
     database.session.add(new_sale)
     database.session.commit()
-    flash("Sale accepted...", category="success")
     return redirect(request.referrer)
+

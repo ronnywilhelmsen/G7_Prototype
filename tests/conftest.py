@@ -1,8 +1,7 @@
 import pytest
 
-from web import database, start
-from web.models import User, Item, Category, Store
-from flask_login import login_user, current_user, logout_user
+from web import start, database
+from web.models import User, Item, Category, Store, Bid, Sale
 
 @pytest.fixture(scope="module")
 def new_user():
@@ -10,9 +9,9 @@ def new_user():
     return user
 
 @pytest.fixture(scope="module")
-def new_item():
-    item = Item("Test", "Test", "Test", "123", "1", "A", "", "1")
-    return item
+def new_store():
+    store = Store("Test", "Test", "")
+    return store
 
 @pytest.fixture(scope="module")
 def new_category():
@@ -20,9 +19,19 @@ def new_category():
     return category
 
 @pytest.fixture(scope="module")
-def new_store():
-    store = Store("Test", "Test", "")
-    return store
+def new_item():
+    item = Item("Producer", "Model", "Description", "123", "3", "A", "", "1")
+    return item
+
+@pytest.fixture(scope="module")
+def new_bid():
+    bid = Bid("1", "1", "150")
+    return bid
+
+@pytest.fixture(scope="module")
+def new_sale():
+    sale = Sale("1", "1")
+    return sale
 
 @pytest.fixture(scope="module")
 def test_client():
@@ -32,18 +41,25 @@ def test_client():
         with app.app_context():
             yield testing_client
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope='module')
 def init_database(test_client):
+    # Create the database and the database table
+    database.create_all()
 
-    user1 = User(name="Test1")
-    user2 = User(name="Test2")
-
+    # Insert user data
+    user1 = User('OWNER')
     database.session.add(user1)
-    database.session.add(user2)
 
     database.session.commit()
 
     yield
 
-    database.delete(user1)
-    database.delete(user2)
+@pytest.fixture(scope='function')
+def login_user(test_client):
+    test_client.post('/login',
+                     data=dict(name='ADMIN'),
+                     follow_redirects=True)
+
+    yield  # this is where the testing happens!
+
+    test_client.get('/logout', follow_redirects=True)

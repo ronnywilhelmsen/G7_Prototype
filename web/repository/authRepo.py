@@ -14,6 +14,7 @@ def sign_up():
     database.session.commit()
 
     login_user(new_User, remember=True)
+    return redirect("/")
 
 def login():
     name = request.form.get('name')
