@@ -32,34 +32,3 @@ def new_bid():
 def new_sale():
     sale = Sale("1", "1")
     return sale
-
-# @pytest.fixture(scope="module")
-# def test_client():
-#     app = start()
-#
-#     with app.test_client() as testing_client:
-#         with app.app_context():
-#             yield testing_client
-#
-# @pytest.fixture(scope='module')
-# def init_database(test_client):
-#     # Create the database and the database table
-#     database.create_all()
-#
-#     # Insert user data
-#     user1 = User('USER')
-#     database.session.add(user1)
-#
-#     database.session.commit()
-#
-#     yield
-#
-# @pytest.fixture(scope='function')
-# def login_user(test_client):
-#     test_client.post('/login',
-#                      data=dict(name='ADMIN'),
-#                      follow_redirects=True)
-#
-#     yield  # this is where the testing happens!
-#
-#     test_client.get('/logout', follow_redirects=True)
