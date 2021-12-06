@@ -17,16 +17,6 @@ class TestWebApp(unittest.TestCase):
         self.app = None
         self.appctx = None
 
-    def populate_db(self):
-        user = User(name="ADMIN")
-        store = Store("Test", "Test", "")
-        category = Category("Test", "Test", "1")
-        item = Item("Producer", "Model", "Description", "123", "3", "A", "", "1")
-        bid = Bid("1", "1", "150")
-        sale = Sale("1", "1")
-        database.session.add(user, store, category, item, bid, sale)
-        database.session.commit()
-
     def test_app(self):
         assert self.app is not None
         assert current_app == self.app
@@ -37,6 +27,28 @@ class TestWebApp(unittest.TestCase):
         html = response.get_data(as_text=True)
 
         assert 'name="name"' in html
+
+    def test_store_list(self):
+        response = self.client.get('/')
+        assert response.status_code == 200
+        html = response.get_data(as_text=True)
+
+        assert 'HIOF' in html
+
+    def test_category_list(self):
+        response = self.client.get('/store-overview/1')
+        assert response.status_code == 200
+        html = response.get_data(as_text=True)
+
+        assert 'Bøker' in html
+
+    def test_item_list(self):
+        response = self.client.get('/1/category-overview/1/item/1')
+        assert response.status_code == 200
+        html = response.get_data(as_text=True)
+
+        assert 'This Item is for Auction' in html
+        assert 'Producer: Matematikk' in html
 
     def test_login_form(self):
         response = self.client.get('/login')
@@ -82,4 +94,16 @@ class TestWebApp(unittest.TestCase):
         response = self.client.get('/login', data={
             'name': "ADMIN"
         }, follow_redirects=True)
+        assert response.status_code == 200
+
+    def test_visit_store(self):
+        response = self.client.get('/store-overview/1')
+        assert response.status_code == 200
+
+    def test_visit_category(self):
+        response = self.client.get('/1/category-overview/1')
+        assert response.status_code == 200
+
+    def test_visit_item(self):
+        response = self.client.get('/1/category-overview/1/item/1')
         assert response.status_code == 200

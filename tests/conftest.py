@@ -20,7 +20,7 @@ def new_category():
 
 @pytest.fixture(scope="module")
 def new_item():
-    item = Item("Producer", "Model", "Description", "123", "3", "A", "", "1")
+    item = Item("Producer", "Model", "Description", "100", "3", "A", "", "1")
     return item
 
 @pytest.fixture(scope="module")
@@ -47,7 +47,7 @@ def init_database(test_client):
     database.create_all()
 
     # Insert user data
-    user1 = User('OWNER')
+    user1 = User('USER')
     database.session.add(user1)
 
     database.session.commit()

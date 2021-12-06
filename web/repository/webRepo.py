@@ -8,10 +8,8 @@ def sale_type(itemId):
     item = Item.query.get(itemId)
     if item.type == "A":
         businessRepo.bid(itemId)
-        flash("You successfully bid on " + item.model, category="success")
     else:
         businessRepo.sale(itemId)
-        flash("You added " + item.model + " to cart", category="success")
 
 def store():
     name = request.form.get('name')

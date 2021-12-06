@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Jones BBQ and Foot Massage</title>
+    <title>G7 Prototype</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -21,12 +21,20 @@
         </div>
     </nav>
 
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+            {% if category == "error" %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ message }}
             </div>
+            {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
         {% endfor %}
+        {% endif %}
     {% endwith %}
 
     <div class="container">

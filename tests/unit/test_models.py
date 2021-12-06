@@ -15,7 +15,7 @@ def test_new_item_with_fixture(new_item):
     assert new_item.producer == "Producer"
     assert new_item.model == "Model"
     assert new_item.description == "Description"
-    assert new_item.price == "123"
+    assert new_item.price == "100"
     assert new_item.duration == "3"
     assert new_item.type == "A"
     assert new_item.picture_url == ""

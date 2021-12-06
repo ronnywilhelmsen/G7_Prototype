@@ -10,13 +10,12 @@
     <img class="card-img-top" src="{{ item.picture_url }}" alt="Card image cap">
     <div class="card-body">
         {% if item.type == "A" %}
-            <button type="button" class="close" onclick="deleteItem{{ item.id }}"></button> <!-- Legge til JS for delete -->
         <h3>This Item is for Auction</h3>
           <h5 class="card-title">Producer: {{ item.producer }}</h5>
           <p class="card-text">Model: {{ item.model }}</p>
           <p class="card-text">Description: {{ item.description }}</p>
           <p class="card-text">Last bid: {{ item.price }}kr</p>
-            {% if  user.name == "ADMIN" or user.name == store.name or user.name == "USER" %}
+{#            {% if  user.name == "ADMIN" or user.name == store.name or user.name == "USER" %}#}
             <form method="POST">
                 <div class="form-group">
                     <label for="price">New bid</label>
@@ -25,7 +24,7 @@
                 <button type="submit" class="btn btn-primary bg-dark">
                     Submit Bid
                 </button>
-                    {% endif %}
+{#                    {% endif %}#}
             </form>
 
             {% elif item.type == "D" %}
@@ -42,11 +41,11 @@
           <p class="card-text">Description: {{ item.description }}</p>
           <p class="card-text">Price: {{ item.price }}kr</p>
             <form method="POST">
-                {% if  user.name == "ADMIN" or user.name == store.name or user.name == "USER" %}
+{#                {% if  user.name == "ADMIN" or user.name == store.name or user.name == "USER" %}#}
                     <button type="submit" class="btn btn-primary bg-dark">
                         Add to cart
                     </button>
-                {% endif %}
+{#                {% endif %}#}
             </form>
         {% endif %}
     </div>
