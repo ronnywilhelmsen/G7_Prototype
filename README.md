@@ -11,7 +11,7 @@ Den endelige prototypen for gruppe G7 SE&T 2021
 <h3>Kjøring av kode</h3>
 <ul>
     <li>Pakk ut mappen fra zip-mappen</li>
-    <li>Åpne mappen i editor(Pycharm, VS Code, osv.)</li>
+    <li>Åpne mappen i editor (Pycharm, VS Code, osv.)</li>
     <li>Bruk kommandoen "pip install -r requirements.txt" i terminalen for å laste ned dependencies</li>
     <li>Opprett en Flask server configuration med target "app.py"</li>
     <li>Kjør systemet</li>
