@@ -1,6 +1,6 @@
 import pytest
 
-from web import start, database
+from web.__init__ import start, database
 from web.models import User, Item, Category, Store, Bid, Sale
 
 @pytest.fixture(scope="module")
